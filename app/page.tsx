@@ -1,65 +1,129 @@
-import Image from "next/image";
-
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <main
+      style={{
+        minHeight: '100vh',
+        display: 'grid',
+        placeItems: 'center',
+        padding: 24,
+        fontFamily:
+          'ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial',
+        background:
+          'radial-gradient(1200px 600px at 20% 10%, rgba(59,130,246,.15), transparent 60%), radial-gradient(1000px 500px at 80% 30%, rgba(34,197,94,.12), transparent 55%), linear-gradient(180deg, #0b1220 0%, #0a0f1a 100%)',
+        color: '#e5e7eb',
+      }}
+    >
+      <section
+        style={{
+          width: 'min(520px, 92vw)',
+          padding: 24,
+          borderRadius: 18,
+          background: 'rgba(17,24,39,.75)',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid rgba(255,255,255,.1)',
+          boxShadow: '0 20px 60px rgba(0,0,0,.45)',
+        }}
+      >
+        {/* Badge */}
+        <div
+          style={{
+            display: 'inline-block',
+            padding: '6px 12px',
+            borderRadius: 999,
+            border: '1px solid rgba(255,255,255,.15)',
+            background: 'rgba(255,255,255,.06)',
+            fontSize: 12,
+            letterSpacing: 1,
+            textTransform: 'uppercase',
+            marginBottom: 16,
+          }}
+        >
+          PetAdopt
+        </div>
+
+        {/* Title */}
+        <h1
+          style={{
+            margin: 0,
+            fontSize: 28,
+            lineHeight: 1.2,
+            letterSpacing: -0.3,
+          }}
+        >
+          Web Auxiliar
+        </h1>
+
+        {/* Description */}
+        <p
+          style={{
+            marginTop: 10,
+            opacity: 0.85,
+            lineHeight: 1.6,
+          }}
+        >
+          Este sitio se utiliza para <strong>confirmación de cuentas</strong> y
+          <strong> restablecimiento de contraseñas</strong> de la aplicación
+          móvil <strong>PetAdopt</strong>.
+        </p>
+
+        {/* Divider */}
+        <div
+          style={{
+            height: 1,
+            background: 'rgba(255,255,255,.08)',
+            margin: '18px 0',
+          }}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+        {/* Routes */}
+        <ul
+          style={{
+            listStyle: 'none',
+            padding: 0,
+            margin: 0,
+            display: 'grid',
+            gap: 10,
+          }}
+        >
+          <li
+            style={{
+              padding: 12,
+              borderRadius: 12,
+              border: '1px solid rgba(255,255,255,.12)',
+              background: 'rgba(255,255,255,.05)',
+            }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            🔗 <code>/auth/callback</code> – Confirmación de cuenta
+          </li>
+
+          <li
+            style={{
+              padding: 12,
+              borderRadius: 12,
+              border: '1px solid rgba(255,255,255,.12)',
+              background: 'rgba(255,255,255,.05)',
+            }}
           >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+            🔑 <code>/reset</code> – Restablecer contraseña
+          </li>
+        </ul>
+
+        {/* Footer */}
+        <footer
+          style={{
+            marginTop: 20,
+            paddingTop: 14,
+            borderTop: '1px solid rgba(255,255,255,.08)',
+            fontSize: 12,
+            opacity: 0.7,
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
+        >
+          <span>© {new Date().getFullYear()} PetAdopt</span>
+          <span>Web Auxiliar</span>
+        </footer>
+      </section>
+    </main>
   );
 }

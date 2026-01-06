@@ -20,6 +20,10 @@ export default function ResetPage() {
 
       try {
         const url = new URL(window.location.href);
+
+        // ─────────────────────────────────────────────
+        // 1️⃣ FLUJO RESET CORRECTO (token_hash + recovery)
+        // ─────────────────────────────────────────────
         const tokenHash = url.searchParams.get('token_hash');
         const type = url.searchParams.get('type');
 
@@ -42,6 +46,9 @@ export default function ResetPage() {
           return;
         }
 
+        // ─────────────────────────────────────────────
+        // 2️⃣ FLUJO ALTERNATIVO (code + PKCE)
+        // ─────────────────────────────────────────────
         const code = url.searchParams.get('code');
 
         if (code) {
@@ -59,6 +66,10 @@ export default function ResetPage() {
           setReady(true);
           return;
         }
+
+        // ─────────────────────────────────────────────
+        // ❌ NINGÚN PARÁMETRO VÁLIDO
+        // ─────────────────────────────────────────────
         setStatus('error');
         setMsg(
           'Link inválido o incompleto. Asegúrate de abrir el enlace del correo enviado por PetAdopt.'

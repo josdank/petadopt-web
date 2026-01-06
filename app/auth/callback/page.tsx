@@ -99,6 +99,8 @@ export default function CallbackPage() {
 
         <p style={{ marginTop: 10, opacity: 0.85, lineHeight: 1.6 }}>
           Validamos tu enlace y luego abrimos automáticamente la aplicación móvil.
+
+          Si la app no se abre, pulsa el botón de abajo para intentarlo manualmente.
         </p>
 
         {/* Divider */}

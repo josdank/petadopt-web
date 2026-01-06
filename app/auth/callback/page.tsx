@@ -4,10 +4,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { supabase } from '../../../lib/supabase';
 
 export default function CallbackPage() {
-  const [msg, setMsg] = useState('Procesando enlace...');
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
 
-  // Links para abrir app (Android)
   const intentLink = useMemo(
     () =>
       'intent://auth/callback?confirmed=1#Intent;scheme=petadopt;package=com.example.petadopt;end;',
@@ -23,7 +21,6 @@ export default function CallbackPage() {
 
         if (!code) {
           setStatus('error');
-          setMsg('No se encontró el parámetro "code". Verifica el enlace del correo.');
           return;
         }
 
@@ -31,38 +28,20 @@ export default function CallbackPage() {
 
         if (error) {
           setStatus('error');
-          setMsg(`Error al confirmar: ${error.message}`);
           return;
         }
 
         setStatus('success');
-        setMsg('✅ Cuenta confirmada. Abriendo PetAdopt...');
-
-        // Intentar abrir app (Android Chrome)
         window.location.href = intentLink;
 
-        // Fallback custom scheme
         setTimeout(() => {
           window.location.href = deepLink;
         }, 700);
-
-        // Mensaje final por si el navegador no abrió
-        setTimeout(() => {
-          setMsg('✅ Cuenta confirmada. Si no se abrió la app, usa el botón de abajo.');
-        }, 1800);
       } catch (e: any) {
         setStatus('error');
-        setMsg(`Error inesperado: ${String(e?.message ?? e)}`);
       }
     })();
   }, [deepLink, intentLink]);
-
-  const pillBorder =
-    status === 'loading'
-      ? '1px solid rgba(255,255,255,.15)'
-      : status === 'success'
-      ? '1px solid rgba(34,197,94,.45)'
-      : '1px solid rgba(239,68,68,.45)';
 
   return (
     <main
@@ -130,20 +109,6 @@ export default function CallbackPage() {
             margin: '18px 0',
           }}
         />
-
-        {/* Status box */}
-        <div
-          style={{
-            padding: 12,
-            borderRadius: 12,
-            border: pillBorder,
-            background: 'rgba(255,255,255,.06)',
-            fontSize: 14,
-            lineHeight: 1.4,
-          }}
-        >
-          {msg}
-        </div>
 
         {/* Buttons */}
         <div style={{ display: 'grid', gap: 10, marginTop: 14 }}>

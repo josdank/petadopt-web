@@ -7,7 +7,7 @@ export default function CallbackPage() {
   const [msg, setMsg] = useState('Procesando enlace...');
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
 
-  // ✅ Links para abrir app (Android)
+  // Links para abrir app (Android)
   const intentLink = useMemo(
     () =>
       'intent://auth/callback?confirmed=1#Intent;scheme=petadopt;package=com.example.petadopt;end;',

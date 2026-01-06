@@ -1,14 +1,79 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { supabase } from '../../lib/supabase';
+
+type Status = 'idle' | 'loading' | 'error' | 'success';
 
 export default function ResetPage() {
   const [password, setPassword] = useState('');
   const [msg, setMsg] = useState('');
-  const [status, setStatus] = useState<'idle' | 'loading' | 'error' | 'success'>('idle');
+  const [status, setStatus] = useState<Status>('idle');
+
+  // Controla si el link ya fue validado y existe sesión
+  const [ready, setReady] = useState(false);
+
+  const year = useMemo(() => new Date().getFullYear(), []);
+
+  useEffect(() => {
+    (async () => {
+      setStatus('loading');
+      setMsg('Validando enlace de restablecimiento...');
+
+      try {
+        const url = new URL(window.location.href);
+
+        // Supabase (reset / confirm) normalmente llega con ?code=...
+        const code = url.searchParams.get('code');
+
+        if (!code) {
+          setStatus('error');
+          setMsg(
+            'Link inválido o incompleto. Asegúrate de abrir el enlace del correo (debe contener ?code=...).'
+          );
+          setReady(false);
+          return;
+        }
+
+        // Este paso crea la sesión necesaria para que updateUser funcione
+        const { error } = await supabase.auth.exchangeCodeForSession(code);
+
+        if (error) {
+          setStatus('error');
+          setMsg(`Error al validar el link: ${error.message}`);
+          setReady(false);
+          return;
+        }
+
+        // Confirmar que ya hay sesión
+        const { data } = await supabase.auth.getSession();
+        if (!data.session) {
+          setStatus('error');
+          setMsg(
+            'No se pudo establecer sesión (Auth session missing). Intenta abrir nuevamente el enlace del correo.'
+          );
+          setReady(false);
+          return;
+        }
+
+        setStatus('idle');
+        setMsg('Ingresa tu nueva contraseña.');
+        setReady(true);
+      } catch (e: any) {
+        setStatus('error');
+        setMsg(`Error inesperado: ${e?.message ?? String(e)}`);
+        setReady(false);
+      }
+    })();
+  }, []);
 
   const onSubmit = async () => {
+    if (!ready) {
+      setStatus('error');
+      setMsg('Primero se debe validar el enlace. Refresca la página o abre el link del correo nuevamente.');
+      return;
+    }
+
     if (password.trim().length < 6) {
       setStatus('error');
       setMsg('La contraseña debe tener al menos 6 caracteres.');
@@ -36,8 +101,7 @@ export default function ResetPage() {
         display: 'grid',
         placeItems: 'center',
         padding: 24,
-        fontFamily:
-          'ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial',
+        fontFamily: 'ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial',
         background:
           'radial-gradient(1200px 600px at 20% 10%, rgba(59,130,246,.15), transparent 60%), radial-gradient(1000px 500px at 80% 30%, rgba(34,197,94,.12), transparent 55%), linear-gradient(180deg, #0b1220 0%, #0a0f1a 100%)',
         color: '#e5e7eb',
@@ -91,8 +155,7 @@ export default function ResetPage() {
             lineHeight: 1.6,
           }}
         >
-          Ingresa una nueva contraseña para tu cuenta.  
-          Al finalizar podrás volver a la aplicación móvil.
+          Ingresa una nueva contraseña para tu cuenta. Al finalizar podrás volver a la aplicación móvil.
         </p>
 
         {/* Divider */}
@@ -107,9 +170,10 @@ export default function ResetPage() {
         {/* Input */}
         <input
           type="password"
-          placeholder="Nueva contraseña"
+          placeholder={ready ? 'Nueva contraseña' : 'Validando link...'}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          disabled={!ready || status === 'loading' || status === 'success'}
           style={{
             width: '100%',
             padding: 14,
@@ -119,13 +183,14 @@ export default function ResetPage() {
             color: '#e5e7eb',
             outline: 'none',
             fontSize: 14,
+            opacity: !ready ? 0.6 : 1,
           }}
         />
 
         {/* Button */}
         <button
           onClick={onSubmit}
-          disabled={status === 'loading'}
+          disabled={!ready || status === 'loading' || status === 'success'}
           style={{
             marginTop: 14,
             width: '100%',
@@ -138,7 +203,8 @@ export default function ResetPage() {
                 : 'linear-gradient(180deg, #e5e7eb 0%, #cbd5e1 100%)',
             color: '#0b1220',
             fontWeight: 700,
-            cursor: status === 'loading' ? 'not-allowed' : 'pointer',
+            cursor: !ready || status === 'loading' || status === 'success' ? 'not-allowed' : 'pointer',
+            opacity: !ready ? 0.7 : 1,
           }}
         >
           Guardar contraseña
@@ -178,7 +244,7 @@ export default function ResetPage() {
             justifyContent: 'space-between',
           }}
         >
-          <span>© {new Date().getFullYear()} PetAdopt</span>
+          <span>© {year} PetAdopt</span>
           <span>Web Auxiliar</span>
         </footer>
       </section>

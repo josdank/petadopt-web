@@ -269,7 +269,7 @@ export default function HomeAnimated() {
           </Reveal>
 
           <div className="mt-10 grid gap-6 md:grid-cols-4">
-            <MetricCard label="Publicaciones activas" value={120} suffix="+" note="Demo" />
+            <MetricCard label="Publicaciones activas" value={120} suffix="+" note="Potencial" />
             <MetricCard label="Usuarios verificados" value={75} suffix="%" note="Proyección" />
             <MetricCard label="Tiempo para match" value={3} suffix=" días" note="Objetivo" />
             <MetricCard label="Reducción de riesgo" value={40} suffix="%" note="Proyección" />

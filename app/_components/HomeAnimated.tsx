@@ -258,13 +258,13 @@ export default function HomeAnimated() {
       <section id="metricas" className="bg-white">
         <div className="mx-auto max-w-6xl px-6 py-16">
           <Reveal>
-            <p className="text-sm font-semibold tracking-wide text-[var(--ljl-teal)]">Pitch / Traction</p>
+            <p className="text-sm font-semibold tracking-wide text-[var(--ljl-teal)]">Validación del mercado</p>
             <h2 className="mt-2 font-[var(--font-display)] text-3xl font-semibold text-[var(--ljl-dark)]">
-              Métricas que importan (modo demo)
+              Métricas que importan
             </h2>
             <p className="mt-3 max-w-2xl text-black/70">
-              Estas métricas sirven como demo/proyección para la presentación tipo Shark Tank.
-              Cuando tengan datos reales, solo reemplazan los valores.
+              Estos números muestran la oportunidad de negocio
+              y el valor que podemos generar a gran escala.
             </p>
           </Reveal>
 
@@ -456,7 +456,7 @@ function MetricCard({
   label,
   value,
   suffix = "",
-  note = "Demo",
+  note = "Estimación",
 }: {
   label: string;
   value: number;

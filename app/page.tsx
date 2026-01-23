@@ -38,7 +38,7 @@ export default function Home() {
             marginBottom: 16,
           }}
         >
-          PetAdopt
+          LJL - COLIVE
         </div>
 
         {/* Title */}
@@ -63,7 +63,7 @@ export default function Home() {
         >
           Este sitio se utiliza para <strong>confirmación de cuentas</strong> y
           <strong> restablecimiento de contraseñas</strong> de la aplicación
-          móvil <strong>PetAdopt</strong>.
+          móvil <strong>LJL - COLIVE</strong>.
         </p>
 
         {/* Divider */}
@@ -120,8 +120,8 @@ export default function Home() {
             justifyContent: 'space-between',
           }}
         >
-          <span>© {new Date().getFullYear()} PetAdopt</span>
-          <span>Web Auxiliar</span>
+          <span>© {new Date().getFullYear()} LJL-COLIVE</span>
+          <span>Web de confirmación</span>
         </footer>
       </section>
     </main>

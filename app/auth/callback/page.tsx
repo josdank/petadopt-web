@@ -82,7 +82,7 @@ export default function CallbackPage() {
             marginBottom: 16,
           }}
         >
-          PetAdopt
+          LJL - COLIVE
         </div>
 
         {/* Title */}
@@ -131,7 +131,7 @@ export default function CallbackPage() {
               textDecoration: 'none',
             }}
           >
-            Abrir PetAdopt
+            Abrir LJL - COLIVE
           </a>
         </div>
 
@@ -151,7 +151,7 @@ export default function CallbackPage() {
             justifyContent: 'space-between',
           }}
         >
-          <span>© {new Date().getFullYear()} PetAdopt</span>
+          <span>© {new Date().getFullYear()} LJL - COLIVE</span>
           <span>Web Auxiliar</span>
         </footer>
       </section>

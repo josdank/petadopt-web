@@ -72,7 +72,7 @@ export default function ResetPage() {
         // ─────────────────────────────────────────────
         setStatus('error');
         setMsg(
-          'Link inválido o incompleto. Asegúrate de abrir el enlace del correo enviado por PetAdopt.'
+          'Link inválido o incompleto. Asegúrate de abrir el enlace del correo enviado por LJL - COLIVE.'
         );
         setReady(false);
       } catch (e: any) {
@@ -148,7 +148,7 @@ export default function ResetPage() {
             marginBottom: 16,
           }}
         >
-          PetAdopt
+          LJL - COLIVE
         </div>
 
         <h1 style={{ margin: 0, fontSize: 26 }}>Restablecer contraseña</h1>
@@ -225,7 +225,7 @@ export default function ResetPage() {
             justifyContent: 'space-between',
           }}
         >
-          <span>© {year} PetAdopt</span>
+          <span>© {year} LJL - COLIVE</span>
           <span>Web Auxiliar</span>
         </footer>
       </section>

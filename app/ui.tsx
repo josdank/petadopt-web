@@ -18,7 +18,7 @@ export function Shell({
 
       <section style={styles.card}>
         <header style={{ marginBottom: 18 }}>
-          <div style={styles.badge}>PetAdopt</div>
+          <div style={styles.badge}>LJL - COLIVE</div>
           <h1 style={styles.h1}>{title}</h1>
           {subtitle ? <p style={styles.p}>{subtitle}</p> : null}
         </header>
@@ -26,7 +26,7 @@ export function Shell({
         <div>{children}</div>
 
         <footer style={styles.footer}>
-          <span>© {new Date().getFullYear()} PetAdopt</span>
+          <span>© {new Date().getFullYear()} LJL - COLIVE</span>
           <span style={{ opacity: 0.6 }}>Web auxiliar</span>
         </footer>
       </section>

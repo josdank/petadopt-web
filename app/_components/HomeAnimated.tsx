@@ -281,7 +281,7 @@ export default function HomeAnimated() {
       <section id="como-funciona" className="bg-white">
         <div className="mx-auto max-w-6xl px-6 pb-16">
           <Reveal>
-            <p className="text-sm font-semibold tracking-wide text-[var(--ljl-teal)]">Enfoque tipo Startup</p>
+            <p className="text-sm font-semibold tracking-wide text-[var(--ljl-teal)]">Enfoque Inicial</p>
             <h2 className="mt-2 font-[var(--font-display)] text-3xl font-semibold text-[var(--ljl-dark)]">
               Un problema real. Una solución profesional.
             </h2>

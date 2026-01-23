@@ -1,9 +1,9 @@
 [build]
   command = "npm run build"
-  publish = "out"
+  publish = ".next"
 
-# Asegura que rutas con trailing slash funcionen correctamente
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.environment]
+  NODE_VERSION = "20"

@@ -1,0 +1,12 @@
+{
+  "name": "LJL – CoLive",
+  "short_name": "CoLive",
+  "description": "Plataforma segura y profesional para convivencia compartida.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B1220",
+  "theme_color": "#0B1220",
+  "icons": [
+    { "src": "/brand/Logo_app.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

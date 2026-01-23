@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 
@@ -21,9 +22,7 @@ export default function ResetPage() {
       try {
         const url = new URL(window.location.href);
 
-        // ─────────────────────────────────────────────
-        // 1️⃣ FLUJO RESET CORRECTO (token_hash + recovery)
-        // ─────────────────────────────────────────────
+        // 1) Flujo recomendado por Supabase: token_hash + type=recovery
         const tokenHash = url.searchParams.get('token_hash');
         const type = url.searchParams.get('type');
 
@@ -46,11 +45,8 @@ export default function ResetPage() {
           return;
         }
 
-        // ─────────────────────────────────────────────
-        // 2️⃣ FLUJO ALTERNATIVO (code + PKCE)
-        // ─────────────────────────────────────────────
+        // 2) Flujo alternativo (PKCE): code
         const code = url.searchParams.get('code');
-
         if (code) {
           const { error } = await supabase.auth.exchangeCodeForSession(code);
 
@@ -67,28 +63,20 @@ export default function ResetPage() {
           return;
         }
 
-        // ─────────────────────────────────────────────
-        // ❌ NINGÚN PARÁMETRO VÁLIDO
-        // ─────────────────────────────────────────────
         setStatus('error');
-        setMsg(
-          'Link inválido o incompleto. Asegúrate de abrir el enlace del correo enviado por LJL - COLIVE.'
-        );
+        setMsg('Enlace inválido o incompleto. Solicita un nuevo restablecimiento desde la app.');
         setReady(false);
       } catch (e: any) {
         setStatus('error');
-        setMsg(`Error inesperado: ${e?.message ?? String(e)}`);
+        setMsg('Ocurrió un error al procesar el enlace. Intenta nuevamente.');
         setReady(false);
       }
     })();
   }, []);
 
-  const onSubmit = async () => {
-    if (!ready) {
-      setStatus('error');
-      setMsg('Primero se debe validar el enlace.');
-      return;
-    }
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!ready) return;
 
     if (password.trim().length < 6) {
       setStatus('error');
@@ -103,130 +91,63 @@ export default function ResetPage() {
 
     if (error) {
       setStatus('error');
-      setMsg('Error: ' + error.message);
-    } else {
-      setStatus('success');
-      setMsg('✅ Contraseña actualizada. Ya puedes volver a la app e iniciar sesión.');
+      setMsg(`No se pudo actualizar la contraseña: ${error.message}`);
+      return;
     }
+
+    setStatus('success');
+    setMsg('Contraseña actualizada con éxito. Ya puedes iniciar sesión en la app.');
   };
 
   return (
-    <main
-      style={{
-        minHeight: '100vh',
-        display: 'grid',
-        placeItems: 'center',
-        padding: 24,
-        fontFamily:
-          'ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial',
-        background:
-          'radial-gradient(1200px 600px at 20% 10%, rgba(59,130,246,.15), transparent 60%), radial-gradient(1000px 500px at 80% 30%, rgba(34,197,94,.12), transparent 55%), linear-gradient(180deg, #0b1220 0%, #0a0f1a 100%)',
-        color: '#e5e7eb',
-      }}
-    >
-      <section
-        style={{
-          width: 'min(480px, 92vw)',
-          padding: 24,
-          borderRadius: 18,
-          background: 'rgba(17,24,39,.75)',
-          backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255,255,255,.1)',
-          boxShadow: '0 20px 60px rgba(0,0,0,.45)',
-        }}
-      >
-        <div
-          style={{
-            display: 'inline-block',
-            padding: '6px 12px',
-            borderRadius: 999,
-            border: '1px solid rgba(255,255,255,.15)',
-            background: 'rgba(255,255,255,.06)',
-            fontSize: 12,
-            letterSpacing: 1,
-            textTransform: 'uppercase',
-            marginBottom: 16,
-          }}
-        >
-          LJL - COLIVE
+    <main className="min-h-screen bg-[var(--ljl-dark)] text-white grid place-items-center px-6 py-10">
+      <section className="w-full max-w-lg rounded-3xl bg-white/10 p-7 ring-1 ring-white/15 backdrop-blur">
+        <div className="flex items-center gap-3">
+          <div className="h-12 w-12 overflow-hidden rounded-2xl bg-white/10 ring-1 ring-white/15">
+            <Image
+              src="/brand/Logo_app.png"
+              alt="LJL – CoLive"
+              width={96}
+              height={96}
+              className="h-full w-full object-contain p-1"
+              priority
+            />
+          </div>
+          <div>
+            <p className="text-xs text-white/70">LJL – CoLive</p>
+            <h1 className="font-[var(--font-display)] text-xl font-semibold">Restablecer contraseña</h1>
+          </div>
         </div>
 
-        <h1 style={{ margin: 0, fontSize: 26 }}>Restablecer contraseña</h1>
+        <div className="mt-5 rounded-2xl bg-white/10 p-4 ring-1 ring-white/10">
+          <p className="text-sm text-white/85">{msg}</p>
+        </div>
 
-        <p style={{ marginTop: 10, opacity: 0.85 }}>
-          Ingresa una nueva contraseña para tu cuenta.
-        </p>
+        <form onSubmit={onSubmit} className="mt-5 space-y-3">
+          <label className="block text-sm text-white/80">
+            Nueva contraseña
+            <input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+              placeholder="••••••••"
+              disabled={!ready || status === 'loading' || status === 'success'}
+              className="mt-2 w-full rounded-xl bg-white/10 px-4 py-3 text-white placeholder:text-white/40 ring-1 ring-white/15 outline-none focus:ring-2 focus:ring-[var(--ljl-gold)]"
+            />
+          </label>
 
-        <div style={{ height: 1, background: 'rgba(255,255,255,.08)', margin: '18px 0' }} />
-
-        <input
-          type="password"
-          placeholder={ready ? 'Nueva contraseña' : 'Validando enlace...'}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          disabled={!ready || status === 'loading' || status === 'success'}
-          style={{
-            width: '100%',
-            padding: 14,
-            borderRadius: 12,
-            border: '1px solid rgba(255,255,255,.15)',
-            background: 'rgba(255,255,255,.06)',
-            color: '#e5e7eb',
-          }}
-        />
-
-        <button
-          onClick={onSubmit}
-          disabled={!ready || status === 'loading' || status === 'success'}
-          style={{
-            marginTop: 14,
-            width: '100%',
-            padding: 14,
-            borderRadius: 12,
-            border: '1px solid rgba(255,255,255,.35)',
-            background:
-              status === 'loading'
-                ? 'rgba(255,255,255,.3)'
-                : 'linear-gradient(180deg, #e5e7eb 0%, #cbd5e1 100%)',
-            color: '#0b1220',
-            fontWeight: 700,
-          }}
-        >
-          Guardar contraseña
-        </button>
-
-        {msg && (
-          <div
-            style={{
-              marginTop: 14,
-              padding: 12,
-              borderRadius: 12,
-              border:
-                status === 'error'
-                  ? '1px solid rgba(239,68,68,.45)'
-                  : status === 'success'
-                  ? '1px solid rgba(34,197,94,.45)'
-                  : '1px solid rgba(255,255,255,.15)',
-              background: 'rgba(255,255,255,.06)',
-            }}
+          <button
+            type="submit"
+            disabled={!ready || status === 'loading' || status === 'success'}
+            className="w-full rounded-xl bg-[var(--ljl-gold)] px-4 py-3 text-sm font-semibold text-[var(--ljl-dark)] hover:brightness-110 disabled:opacity-50"
           >
-            {msg}
-          </div>
-        )}
+            Actualizar contraseña
+          </button>
+        </form>
 
-        <footer
-          style={{
-            marginTop: 20,
-            paddingTop: 14,
-            borderTop: '1px solid rgba(255,255,255,.08)',
-            fontSize: 12,
-            opacity: 0.7,
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-        >
-          <span>© {year} LJL - COLIVE</span>
-          <span>Web Auxiliar</span>
+        <footer className="mt-6 border-t border-white/10 pt-4 text-xs text-white/60 flex items-center justify-between">
+          <span>© {year} LJL – CoLive</span>
+          <span>Soporte de acceso</span>
         </footer>
       </section>
     </main>

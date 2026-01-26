@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion, useInView, useMotionValue, animate } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-const DOWNLOAD_URL = process.env.NEXT_PUBLIC_APP_DOWNLOAD_URL || "#";
+const DOWNLOAD_URL = "https://github.com/josdank/AM_ProyectoFinal_LJL/releases/download/Lanzamiento_Inicial/Ayni.apk";
 const PUBLISHED_URL = process.env.NEXT_PUBLIC_APP_PUBLISHED_URL || "#";
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -85,7 +85,7 @@ export default function HomeAnimated() {
             </a>
 
             <a
-              href="#descargar"
+              href={DOWNLOAD_URL}
               className="rounded-xl bg-[var(--ljl-gold)] px-4 py-2 text-xs font-semibold text-[var(--ljl-dark)] shadow-lg shadow-black/20 hover:brightness-110"
             >
               Descargar
@@ -330,10 +330,13 @@ export default function HomeAnimated() {
       </section>
 
       {/* ===== EQUIPO ===== */}
-      <section id="equipo" className="relative">
-        <h2 className="font-[var(--font-display)] text-3xl font-semibold text-[var(--ljl-dark)] mb-8 text-center">
-          Nuestro Equipo
-        </h2>
+      <section id="equipo" className="relative mx-auto max-w-6xl px-6 py-16">
+        <Reveal>
+          <h2 className="font-[var(--font-display)] text-3xl font-semibold text-[var(--ljl-dark)] mb-8 text-center">
+            Nuestro Equipo
+          </h2>
+        </Reveal>
+        
         <motion.div initial="hidden" animate="visible" variants={scaleIn} className="relative max-w-xl mx-auto">
           <div className="rounded-3xl bg-white/6 p-5 ring-1 ring-white/10">
             <div className="rounded-2xl bg-gradient-to-br from-white/10 to-white/5 p-4">
@@ -345,7 +348,7 @@ export default function HomeAnimated() {
         </motion.div>
 
         {/* Botón de enlace al video */}
-        <div className="mt-6 text-center">
+        <div className="mt-8 text-center">
           <a
             href="https://youtu.be/Ikdp-MjyfaI"
             target="_blank"
@@ -357,14 +360,21 @@ export default function HomeAnimated() {
         </div>
       </section>
 
-
-
       {/* Footer */}
       <footer className="border-t border-black/5 bg-white">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-8 md:flex-row md:items-center md:justify-between">
           <p className="text-sm text-black/70">
             © {year} <span className="font-semibold text-[var(--ljl-dark)]">LJL – CoLive</span>. Todos los derechos reservados.
           </p>
+          
+          <div className="flex items-center gap-3">
+            <a
+              href={DOWNLOAD_URL}
+              className="rounded-xl bg-[var(--ljl-gold)] px-4 py-2 text-xs font-semibold text-[var(--ljl-dark)] shadow-lg shadow-black/20 hover:brightness-110"
+            >
+              Descargar App
+            </a>
+          </div>
         </div>
       </footer>
     </main>

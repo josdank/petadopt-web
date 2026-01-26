@@ -69,6 +69,9 @@ export default function HomeAnimated() {
             <a href="#faq" className="text-sm font-semibold text-white/80 hover:text-white">
               FAQ
             </a>
+              <a href="#equipo" className="text-sm font-semibold text-white/80 hover:text-white">
+              Equipo Fundador
+            </a>
           </nav>
 
           {/* CTA derecha */}
@@ -98,7 +101,7 @@ export default function HomeAnimated() {
             <MobileLink href="#metricas" label="Métricas" />
             <MobileLink href="#como-funciona" label="Cómo funciona" />
             <MobileLink href="#faq" label="FAQ" />
-            <MobileLink href="#descargar" label="Descargar" />
+            <MobileLink href="#equipo" label="Equipo Fundador" />
           </div>
         </div>
       </header>
@@ -326,34 +329,35 @@ export default function HomeAnimated() {
         </div>
       </section>
 
-      {/* ===== DESCARGAR (anchor) ===== */}
-      <section id="descargar" className="bg-[var(--ljl-dark)] text-white">
-        <div className="mx-auto max-w-6xl px-6 py-14">
-          <Reveal>
-            <div className="rounded-3xl bg-white/8 p-8 ring-1 ring-white/12">
-              <h2 className="font-[var(--font-display)] text-3xl font-semibold">
-                Listos para vivir mejor, con confianza.
-              </h2>
-              <p className="mt-3 max-w-2xl text-white/80">
-                Descarga la app y conoce una experiencia donde el usuario es prioridad.
-              </p>
-
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                <motion.a whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} href={DOWNLOAD_URL}
-                  className="rounded-xl bg-[var(--ljl-gold)] px-6 py-3 text-center text-sm font-semibold text-[var(--ljl-dark)] hover:brightness-110"
-                >
-                  Descargar la app
-                </motion.a>
-                <motion.a whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} href={PUBLISHED_URL}
-                  className="rounded-xl bg-white/10 px-6 py-3 text-center text-sm font-semibold ring-1 ring-white/20 hover:bg-white/15"
-                >
-                  Ver app publicada
-                </motion.a>
-              </div>
+      {/* ===== EQUIPO ===== */}
+      <section id="equipo" className="relative">
+        <h2 className="font-[var(--font-display)] text-3xl font-semibold text-[var(--ljl-dark)] mb-8 text-center">
+          Nuestro Equipo
+        </h2>
+        <motion.div initial="hidden" animate="visible" variants={scaleIn} className="relative max-w-xl mx-auto">
+          <div className="rounded-3xl bg-white/6 p-5 ring-1 ring-white/10">
+            <div className="rounded-2xl bg-gradient-to-br from-white/10 to-white/5 p-4">
+              <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut" }} >
+                <Image src="/brand/equipo.png" alt="Equipo LJL – CoLive" width={1600} height={1000} className="h-auto w-full rounded-xl object-cover" priority />
+              </motion.div>
             </div>
-          </Reveal>
+          </div>
+        </motion.div>
+
+        {/* Botón de enlace al video */}
+        <div className="mt-6 text-center">
+          <a
+            href="https://youtu.be/Ikdp-MjyfaI"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block rounded-xl bg-[var(--ljl-gold)] px-6 py-3 text-sm font-semibold text-[var(--ljl-dark)] shadow-lg shadow-black/20 hover:brightness-110"
+          >
+            Ver Video de la App
+          </a>
         </div>
       </section>
+
+
 
       {/* Footer */}
       <footer className="border-t border-black/5 bg-white">
